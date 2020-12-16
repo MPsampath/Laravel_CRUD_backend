@@ -16,9 +16,6 @@ use function GuzzleHttp\Promise\all;
 class Employcontroller extends Controller
 {
     public function insert(Request $request){
-     
-        //dd($request->all());
-
         try {
           
          $employ = new Employe();
@@ -55,39 +52,31 @@ class Employcontroller extends Controller
         }
         return $response;
 
-        
-  
-  
      }
   
   
      public function index(Request $request)
      {
-
+        
          $search_val = $request->get('projects');
          $search_val2 = $request->get('departments');
          $search_val3 = $request->get('companys');
+    
          $searach = DB::table('projects')->where('projects.pro_name','like','%'.$search_val.'%')
              ->leftJoin('employe_projects','projects.id','=','employe_projects.projects_id')
              ->leftJoin('employes','employe_projects.employe_id','=','employes.id')
              ->rightJoin('departments','projects.dep_id','=','departments.id')
-             ->orWhere('departments.dep_name','like','%'.$search_val2.'%')
+             ->Where('departments.dep_name','like','%'.$search_val2.'%')
              ->rightJoin('companies','departments.com_id','=','companies.id')
-             ->orwhere('companies.com_nsme','like','%'.$search_val3.'%')
+             ->where('companies.com_nsme','like','%'.$search_val3.'%')
              ->select('projects.pro_name','employes.emp_name','employes.id','companies.com_nsme','departments.dep_name','employes.emp_address')
              ->get();
            
               return response()->json($searach);
-            
-               
-              //  dd($query);
-             //dd($searach);
-            // return view('Display', ['searach'=>$searach]);
-  
-              //$search_val = $reques->get('company');
+          
      }
 
      public function newController(Request $request){
-        dd($request);
+        // dd($request);
      }
 }
