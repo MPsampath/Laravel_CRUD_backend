@@ -16,7 +16,7 @@ class CreateEmployProjectsTable extends Migration
         Schema::create('project_employ', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('emp_id')->unsigned();
-            $table->foreign('emp_id')->references('id')->on('projects');
+            $table->foreign('emp_id')->references('id')->on('employes');
             $table->integer('pro_id2')->unsigned();
             $table->foreign('pro_id2')->references('id')->on('projects');
             $table->timestamps();

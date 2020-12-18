@@ -16,8 +16,9 @@ use function GuzzleHttp\Promise\all;
 class Employcontroller extends Controller
 {
     public function insert(Request $request){
+      
         try {
-          
+          // dd($request);
          $employ = new Employe();
          $department = new Department();
          $project = new Projects();
@@ -25,7 +26,7 @@ class Employcontroller extends Controller
          $employproject = new Employ_Projects();
   
      
-         $company->com_nsme =$request->company;
+         $company->com_name =$request->company;
          $company->save();
          $comid = DB::getPdo()->lastInsertId();
          $department->com_id=$comid;
@@ -40,8 +41,8 @@ class Employcontroller extends Controller
          $employ -> emp_address = $request ->address;
          $employ->save();
          $empid = DB::getPdo()->lastInsertId();
-         $employproject->employe_id=$empid;
-         $employproject->projects_id=$proid;
+         $employproject->	emp_id=$empid;
+         $employproject->	pro_id2=$proid;
          $employproject->save();
          
         $response['message'] = "Save sucsesfull";
@@ -63,13 +64,13 @@ class Employcontroller extends Controller
          $search_val3 = $request->get('companys');
     
          $searach = DB::table('projects')->where('projects.pro_name','like','%'.$search_val.'%')
-             ->leftJoin('employe_projects','projects.id','=','employe_projects.projects_id')
-             ->leftJoin('employes','employe_projects.employe_id','=','employes.id')
+             ->leftJoin('project_employ','projects.id','=','project_employ.pro_id2')
+             ->leftJoin('employes','project_employ.emp_id','=','employes.id')
              ->rightJoin('departments','projects.dep_id','=','departments.id')
              ->Where('departments.dep_name','like','%'.$search_val2.'%')
              ->rightJoin('companies','departments.com_id','=','companies.id')
-             ->where('companies.com_nsme','like','%'.$search_val3.'%')
-             ->select('projects.pro_name','employes.emp_name','employes.id','companies.com_nsme','departments.dep_name','employes.emp_address')
+             ->where('companies.com_name','like','%'.$search_val3.'%')
+             ->select('projects.pro_name','employes.emp_name','employes.id','companies.com_name','departments.dep_name','employes.emp_address')
              ->get();
            
               return response()->json($searach);

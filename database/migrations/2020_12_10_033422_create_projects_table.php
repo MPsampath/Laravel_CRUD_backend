@@ -16,9 +16,8 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->String('pro_name');
-//            $table->integer('emp_id2')->unsigned();
-            $table->foreign('emp_id2')->references('id')->on('employes');
-
+            $table->integer('dep_id')->unsigned();
+            $table->foreign('dep_id')->references('id')->on('departments');
             $table->timestamps();
         });
     }

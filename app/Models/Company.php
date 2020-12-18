@@ -10,6 +10,6 @@ class Company extends Model
     use HasFactory;
     protected $table = 'companies';
     protected $primaryKey = 'id';
-    protected $fillable = ['com_nsme'];
+    protected $fillable = ['com_name'];
     public $incrementing = false;
 }

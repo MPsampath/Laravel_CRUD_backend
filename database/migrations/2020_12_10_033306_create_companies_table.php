@@ -15,9 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->String('com_nsme');
-            $table->integer('dep_id')->unsigned();
-            $table->foreign('dep_id')->references('id')->on('departments');
+            $table->String('com_name');
             $table->timestamps();
             $table->softDeletes();
         });
